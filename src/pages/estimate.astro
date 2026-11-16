@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import EstimateForm from '../components/EstimateForm.astro';
+import { site, telHref } from '../config/site';
+
+const title = 'Free Drywall Estimate in Waukesha, WI | Waukesha Elite Drywall';
+const description = 'Request a free written drywall estimate in Waukesha, WI. Describe the job, attach photos, and get a clear scope and price back.';
+const schema = [{ '@type': 'BreadcrumbList', itemListElement: [
+  { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+  { '@type': 'ListItem', position: 2, name: 'Free estimate', item: `${site.url}/estimate/` },
+] }];
+---
+<Base title={title} description={description} schema={schema} inlineForm>
+  <section class="pagehead">
+    <div class="wrap">
+      <nav class="crumbs dark" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Free estimate</li></ol></nav>
+      <h1>Request a free estimate</h1>
+      <p class="lede">Fill in what you know. Photos speed things up, especially for repairs.</p>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap est-page">
+      <div>
+        <h2 style="font-size:1.6rem">What happens next</h2>
+        <ol>
+          <li><strong>We review it</strong>Your description and photos are read by someone who does this work.</li>
+          <li><strong>We price it or visit</strong>Simple repairs get a number from photos. Bigger jobs get measured on site.</li>
+          <li><strong>You get it in writing</strong>Scope, finish level, schedule and price. No obligation.</li>
+        </ol>
+        {(site.phone || site.email) && <p style="margin-top:1.5rem">{site.phone && <a href={telHref}>{site.phone}</a>} {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}</p>}
+      </div>
+      <div class="panel" id="estimate-form"><EstimateForm idPrefix="pg" /></div>
+    </div>
+  </section>
+</Base>
+<script>
+  const slug = new URLSearchParams(location.search).get('service');
+  if (slug) {
+    const select = document.querySelector<HTMLSelectElement>('#pg-service');
+    const opt = select?.querySelector<HTMLOptionElement>(`option[data-slug="${CSS.escape(slug)}"]`);
+    if (select && opt) select.value = opt.value;
+  }
+</script>

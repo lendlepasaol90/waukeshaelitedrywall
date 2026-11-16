@@ -1,0 +1,116 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import BeforeAfter from '../../components/BeforeAfter.astro';
+import Faq from '../../components/Faq.astro';
+import { site } from '../../config/site';
+import { services, serviceBySlug, type Service } from '../../data/services';
+import { photo } from '../../lib/photos';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Service };
+const url = `${site.url}/services/${s.slug}/`;
+const related = s.related.map((slug) => serviceBySlug[slug]);
+const plain = s.name.toLowerCase().replace('&', 'and');
+const schema = [
+  { '@type': 'Service', '@id': `${url}#service`, name: s.name, serviceType: s.name, description: s.description, url, provider: { '@id': `${site.url}/#business` }, areaServed: { '@type': 'City', name: `${site.city}, ${site.stateAbbr}` } },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.url}/services/` },
+    { '@type': 'ListItem', position: 3, name: s.name, item: url },
+  ] },
+  { '@type': 'FAQPage', mainEntity: s.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+const toc = [
+  ['overview', 'Overview'], ['scope', s.what.h], ['when', s.situations.h], ['process', s.process.h],
+  ['materials', s.materials.h], ['results', s.benefits.h], ['before-after', 'Before and after'], ['local', s.local.h], ['faq', 'Questions'],
+];
+---
+<Base title={s.title} description={s.description} ogPhoto={s.photo} schema={schema}>
+  <section class="banner">
+    <Picture src={photo(s.photo)} alt={s.photoAlt} widths={[768, 1200, 1800]} sizes="100vw" formats={['avif', 'webp']} loading="eager" fetchpriority="high" />
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <ol><li><a href="/">Home</a></li><li><a href="/services/">Services</a></li><li aria-current="page">{s.name}</li></ol>
+      </nav>
+      <h1>{s.h1}</h1>
+      <p class="lede">{s.lede}</p>
+      <a class="btn btn-copper" href="/estimate/" data-estimate-open data-service={s.slug}>Get a free estimate <Arrow /></a>
+    </div>
+  </section>
+  <div class="facts">
+    <div class="wrap">
+      <dl>{s.facts.map((f) => <div><dt>{f.k}</dt><dd>{f.v}</dd></div>)}</dl>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="wrap doc">
+      <aside class="toc">
+        <nav aria-label="On this page">
+          <h2>On this page</h2>
+          {toc.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+        </nav>
+        <a class="btn btn-coal" href="/estimate/" data-estimate-open data-service={s.slug}>Price this job</a>
+      </aside>
+      <div class="doc-main">
+        <section id="overview" class="first">{s.intro.map((p) => <p>{p}</p>)}</section>
+        <section id="scope"><h2>{s.what.h}</h2>{s.what.p.map((p) => <p>{p}</p>)}</section>
+        <section id="when">
+          <h2>{s.situations.h}</h2>
+          <ul class="rows">{s.situations.items.map((it) => <li class="reveal"><h3>{it.t}</h3><p>{it.d}</p></li>)}</ul>
+        </section>
+        <section id="process">
+          <h2>{s.process.h}</h2>
+          <ol class="rows numbered">{s.process.steps.map((st) => <li class="reveal"><h3>{st.t}</h3><p>{st.d}</p></li>)}</ol>
+        </section>
+        <section id="materials"><h2>{s.materials.h}</h2>{s.materials.p.map((p) => <p>{p}</p>)}</section>
+        <section id="results">
+          <h2>{s.benefits.h}</h2>
+          <ul class="gains">{s.benefits.items.map((b) => <li><h3>{b.t}</h3><p>{b.d}</p></li>)}</ul>
+        </section>
+        <section id="before-after">
+          <h2>Before and after</h2>
+          <BeforeAfter id={`ba-${s.slug}`} before={s.ba.before} after={s.ba.after} beforeAlt={s.ba.beforeAlt} afterAlt={s.ba.afterAlt} />
+        </section>
+        <section id="local">
+          <div class="localnote"><h2>{s.local.h}</h2>{s.local.p.map((p) => <p>{p}</p>)}</div>
+        </section>
+        <section id="faq">
+          <h2>Questions about {plain}</h2>
+          <div class="faq single" style="border-top-width:1px">
+            {s.faqs.map((f) => <details><summary>{f.q}</summary><div class="answer"><p>{f.a}</p></div></details>)}
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <section class="band band-fog">
+    <div class="wrap">
+      <div class="head-row"><div><span class="tag">Related services</span><h2>Work that often goes with this</h2></div></div>
+      <div class="rel">
+        {related.map((r) => (
+          <a href={`/services/${r.slug}/`}>
+            <h3>{r.name}</h3>
+            <p>{r.short}</p>
+            <span class="more">Details <Arrow /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div>
+        <h2>Get a price for {plain.replace(' services', '')} in {site.city}</h2>
+        <p>Describe the job, add a photo, and we will send a written estimate.</p>
+      </div>
+      <a class="btn btn-coal" href="/estimate/" data-estimate-open data-service={s.slug}>Get a free estimate <Arrow /></a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import { site } from '../../config/site';
+import { services } from '../../data/services';
+
+const title = 'Drywall Services in Waukesha, WI | Waukesha Elite Drywall';
+const description = 'Drywall services in Waukesha, WI: installation, taping and mudding, finishing, repair, patching, ceilings, water damage, popcorn removal, basements, garages.';
+const schema = [
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.url}/services/` },
+  ] },
+  { '@type': 'ItemList', itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.name, url: `${site.url}/services/${s.slug}/` })) },
+];
+---
+<Base title={title} description={description} schema={schema}>
+  <section class="pagehead">
+    <div class="wrap">
+      <nav class="crumbs dark" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Services</li></ol></nav>
+      <h1>Drywall services in {site.city}</h1>
+      <p class="lede">Installation, finishing and repair for houses and commercial buildings. Each service has a page of its own with scope, process, materials and common questions.</p>
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <div class="matrix">
+        {services.map((s, i) => (
+          <a href={`/services/${s.slug}/`} class="reveal" style={`--d:${(i % 4) * 0.06}s`}>
+            <h2 style="font-size:1.22rem;margin-bottom:.6rem;letter-spacing:-.01em">{s.name}</h2>
+            <p>{s.short}</p>
+            <span class="go">Details <Arrow /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="cta">
+    <div class="wrap">
+      <div><h2>Not sure which service fits?</h2><p>Send a photo and a sentence. We will sort it out.</p></div>
+      <a class="btn btn-coal" href="/estimate/" data-estimate-open>Get a free estimate <Arrow /></a>
+    </div>
+  </section>
+</Base>

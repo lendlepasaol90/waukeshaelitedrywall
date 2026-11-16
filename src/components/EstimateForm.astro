@@ -1,0 +1,79 @@
+---
+/**
+ * Estimate request form. Used inside the header dialog and on /estimate/.
+ * Submission target and limits come from src/config/site.ts → form.
+ * Behaviour lives in src/scripts/estimate-form.ts.
+ */
+import { site } from '../config/site';
+import { services } from '../data/services';
+interface Props { idPrefix: string; variant?: string }
+const { idPrefix: p, variant = '' } = Astro.props;
+const f = site.form;
+---
+<form
+  class:list={['est-form', variant]}
+  novalidate
+  data-estimate-form
+  data-endpoint={f.endpoint}
+  data-max-photos={f.maxPhotos}
+  data-max-mb={f.maxPhotoMb}
+  action={f.endpoint || undefined}
+  method="post"
+  enctype="multipart/form-data"
+>
+  <div class="field">
+    <label for={`${p}-first`}>First name</label>
+    <input id={`${p}-first`} name="first_name" type="text" autocomplete="given-name" required aria-describedby={`${p}-first-err`} />
+    <span class="err" id={`${p}-first-err`} aria-live="polite"></span>
+  </div>
+  <div class="field">
+    <label for={`${p}-last`}>Last name</label>
+    <input id={`${p}-last`} name="last_name" type="text" autocomplete="family-name" required aria-describedby={`${p}-last-err`} />
+    <span class="err" id={`${p}-last-err`} aria-live="polite"></span>
+  </div>
+  <div class="field">
+    <label for={`${p}-email`}>Email address</label>
+    <input id={`${p}-email`} name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby={`${p}-email-err`} />
+    <span class="err" id={`${p}-email-err`} aria-live="polite"></span>
+  </div>
+  <div class="field">
+    <label for={`${p}-phone`}>Phone number</label>
+    <input id={`${p}-phone`} name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby={`${p}-phone-err`} />
+    <span class="err" id={`${p}-phone-err`} aria-live="polite"></span>
+  </div>
+  <div class="field full">
+    <label for={`${p}-service`}>Service needed</label>
+    <select id={`${p}-service`} name="service" required aria-describedby={`${p}-service-err`}>
+      <option value="">Choose a service</option>
+      {services.map((s) => <option value={s.name} data-slug={s.slug}>{s.name}</option>)}
+    </select>
+    <span class="err" id={`${p}-service-err`} aria-live="polite"></span>
+  </div>
+  <div class="field full">
+    <label for={`${p}-desc`}>Project description</label>
+    <textarea id={`${p}-desc`} name="description" rows="4" required aria-describedby={`${p}-desc-err ${p}-desc-hint`}></textarea>
+    <p class="hint" id={`${p}-desc-hint`}>Room sizes, what happened, and your timing all help us give a realistic figure.</p>
+    <span class="err" id={`${p}-desc-err`} aria-live="polite"></span>
+  </div>
+  <div class="field full">
+    <label for={`${p}-photos`}>Photos <span class="opt">(optional)</span></label>
+    <input id={`${p}-photos`} name="photos" type="file" accept="image/*" multiple aria-describedby={`${p}-photos-hint ${p}-photos-err`} />
+    <p class="hint" id={`${p}-photos-hint`}>Up to {f.maxPhotos} images, {f.maxPhotoMb} MB each.</p>
+    <span class="err" id={`${p}-photos-err`} aria-live="polite"></span>
+  </div>
+
+  <!-- Spam trap: hidden from people, tempting to bots. -->
+  <div class="hp" aria-hidden="true">
+    <label for={`${p}-company-site`}>Leave this field empty</label>
+    <input id={`${p}-company-site`} name="company_website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <input type="hidden" name="page" value={Astro.url.pathname} />
+  {f.turnstileSiteKey && <div class="full cf-turnstile" data-sitekey={f.turnstileSiteKey}></div>}
+
+  <button type="submit" class="btn btn-copper">
+    <span class="spinner" aria-hidden="true"></span>
+    <span data-label>Request my estimate</span>
+  </button>
+  <div class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+  <p class="form-fine">We use these details only to reply about your project.</p>
+</form>

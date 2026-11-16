@@ -1,0 +1,204 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import Faq from '../components/Faq.astro';
+import EstimateForm from '../components/EstimateForm.astro';
+import { site } from '../config/site';
+import { services } from '../data/services';
+import { photo } from '../lib/photos';
+
+const title = 'Waukesha Elite Drywall | Drywall Contractor in Waukesha, WI';
+const description = 'Drywall contractor in Waukesha, WI. Installation, taping, finishing and repair for homes, offices and commercial space. Clear written estimates, free.';
+
+const standards = [
+  { t: 'A written scope before work starts', d: 'What is included, what is not, the finish level and the schedule. On paper, so there is nothing to argue about later.' },
+  { t: 'The right board in the right place', d: 'Fire-rated where the code wants it. Moisture-resistant where water is. Thicker board on ceilings so they stay flat.' },
+  { t: 'Coats that are allowed to dry', d: 'Rushed compound cracks and shrinks. We schedule around drying time instead of pretending it is not there.' },
+  { t: 'A walkthrough under a work light', d: 'Before we call a job finished we look at every wall the way your painter will, and fix what shows.' },
+];
+const faqs = [
+  { q: 'What does an estimate cost?', a: 'Nothing. Send the form with a description and photos. Small repairs can often be priced from that. Larger jobs get a site visit and a written quote.' },
+  { q: 'Do you do both houses and commercial buildings?', a: 'Yes. Roughly speaking, the work is the same trade with different rules. We do remodels and repairs in homes, and framing, board and finish in offices, shops and industrial space.' },
+  { q: 'How long will my job take?', a: 'A patch: one or two visits. A room: about a week. A basement: about two. A commercial build-out depends on the drawings. Most of the calendar is drying time, not labor.' },
+  { q: 'Do you supply the materials?', a: 'Yes. Board, fasteners, corner bead and compound are included in the price unless you ask for labor only.' },
+  { q: 'Is the work messy?', a: 'Drywall makes dust. We contain it with plastic, cover floors and vents, sand with vacuum sanders and clean up before leaving.' },
+  { q: 'Which towns do you work in?', a: `${site.city} first, then the rest of Waukesha County within a reasonable drive: ${site.serviceAreas.slice(1).join(', ')}. Outside that, ask.` },
+];
+const schema = [{ '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }];
+---
+<Base title={title} description={description} schema={schema} heroForm>
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>
+          <span style="--i:0">Straight walls.</span>
+          <span style="--i:1">Square corners.</span>
+          <span style="--i:2" class="cu">Done when we said.</span>
+        </h1>
+        <p class="late" style="--d:.55s">{site.name} hangs, finishes and repairs drywall for homes and commercial buildings in {site.city}, {site.state}. You get a written scope, a real schedule and a crew that sticks to both.</p>
+        <div class="hero-actions late" style="--d:.7s">
+          <a class="btn btn-copper" href="#hero-estimate">Get a free estimate <Arrow /></a>
+          <a class="btn btn-out" href="#services">Explore our services</a>
+        </div>
+      </div>
+      <figure class="hero-photo" style="margin:0">
+        <Picture src={photo('installer-fastening-steel-track')} alt="Drywall installer in a hard hat fastening steel framing track to a wall" widths={[600, 900, 1400]} sizes="(min-width: 56rem) 46vw, 100vw" formats={['avif', 'webp']} loading="eager" fetchpriority="high" />
+        <figcaption>Illustrative photo</figcaption>
+      </figure>
+    </div>
+  </section>
+  <div class="quote-bar">
+    <div class="wrap">
+      <div class="quote-card late" id="hero-estimate">
+        <header>
+          <h2>Request a free estimate</h2>
+          <p>Tell us what you need. We answer with a written price.</p>
+        </header>
+        <EstimateForm idPrefix="hero" variant="bar" />
+      </div>
+    </div>
+  </div>
+
+  <section class="band" id="services">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <span class="tag reveal">Services</span>
+          <h2 class="reveal">Everything between bare studs and a wall ready for paint</h2>
+        </div>
+        <p class="lede reveal" style="--d:.1s">Twelve services, each with its own page. Pick the one that sounds like your job, or send us a photo and we will tell you which it is.</p>
+      </div>
+      <div class="matrix">
+        {services.map((s, i) => (
+          <a href={`/services/${s.slug}/`} class="reveal" style={`--d:${(i % 4) * 0.06}s`}>
+            <h3>{s.name}</h3>
+            <p>{s.short}</p>
+            <span class="go">Details <Arrow /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-coal">
+    <div class="wrap standards">
+      <figure class="reveal-img">
+        <Picture src={photo('fastening-drywall-corner-nail-gun')} alt="Worker in a hard hat and safety glasses fastening a drywall corner" widths={[480, 800, 1100]} sizes="(min-width: 54rem) 40vw, 100vw" formats={['avif', 'webp']} loading="lazy" />
+      </figure>
+      <div>
+        <span class="tag reveal">How we run a job</span>
+        <h2 class="reveal">Four things we do on every job, large or small</h2>
+        <ul class="checks">
+          {standards.map((s, i) => (
+            <li class="reveal" style={`--d:${i * 0.07}s`}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+              <div><h3>{s.t}</h3><p>{s.d}</p></div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-fog">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <span class="tag reveal">Who we work for</span>
+          <h2 class="reveal">Two kinds of customer. One way of working.</h2>
+        </div>
+      </div>
+      <article class="sector reveal">
+        <figure><Picture src={photo('empty-office-smooth-walls-ceiling-grid')} alt="Finished open office floor with smooth white walls and a new ceiling" widths={[480, 800, 1200]} sizes="(min-width: 52rem) 50vw, 100vw" formats={['avif', 'webp']} loading="lazy" /></figure>
+        <div class="txt">
+          <h3>Contractors, owners and property managers</h3>
+          <p>You need a drywall sub who reads the drawings, shows up on the day and does not leave a punch list a page long. We frame, board and finish to the partition schedule, and we tell you early if something on the plans will not work.</p>
+          <ul><li>Tenant build-outs</li><li>Steel stud framing</li><li>Rated partitions</li><li>Off-hours work</li></ul>
+          <a class="more" href="/services/commercial-drywall-services/">Commercial drywall services <Arrow /></a>
+        </div>
+      </article>
+      <article class="sector flip reveal">
+        <figure><Picture src={photo('remodel-interior-drywall-primed')} alt="Remodeled home interior with new drywall finished and ready for paint" widths={[480, 800, 1200]} sizes="(min-width: 52rem) 50vw, 100vw" formats={['avif', 'webp']} loading="lazy" /></figure>
+        <div class="txt">
+          <h3>Homeowners and remodelers</h3>
+          <p>You need walls that look right and a house that is not coated in dust. We protect what stays, keep to the days we gave you, and leave the room ready for the painter.</p>
+          <ul><li>Remodels and additions</li><li>Basements and garages</li><li>Popcorn ceiling removal</li><li>Cracks, holes and leaks</li></ul>
+          <a class="more" href="/services/residential-drywall-services/">Residential drywall services <Arrow /></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="band" id="how-we-work">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <span class="tag reveal">How we work</span>
+          <h2 class="reveal">From first call to final walkthrough</h2>
+        </div>
+        <p class="lede reveal" style="--d:.1s">Five steps. The middle one takes longest, because compound dries on its own schedule.</p>
+      </div>
+      <ol class="timeline">
+        <li class="reveal"><div><h3>Estimate</h3><p>Photos or a site visit, then a written scope and price.</p></div></li>
+        <li class="reveal" style="--d:.07s"><div><h3>Schedule</h3><p>A start date and a day-by-day outline you can plan around.</p></div></li>
+        <li class="reveal" style="--d:.14s"><div><h3>Hang and finish</h3><p>Board up, joints taped, three coats, each one dry before the next.</p></div></li>
+        <li class="reveal" style="--d:.21s"><div><h3>Inspect</h3><p>Sanded and checked under a work light. Flaws marked and fixed.</p></div></li>
+        <li class="reveal" style="--d:.28s"><div><h3>Hand over</h3><p>Cleaned up, walked through with you, ready for primer.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band band-coal">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <span class="tag reveal">Before and after</span>
+          <h2 class="reveal">What finishing actually changes</h2>
+        </div>
+        <p class="lede reveal" style="--d:.1s">Slide the bar. On one side, board with taped seams and spotted screws. On the other, a surface with no seams to find.</p>
+      </div>
+      <div class="reveal">
+        <BeforeAfter id="ba-home" before="new-room-drywall-taped-window" after="empty-room-smooth-plaster-walls" beforeAlt="new drywall with taped seams and coated screw heads" afterAlt="finished room with smooth, even walls" />
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="area">
+    <div class="wrap local">
+      <div>
+        <span class="tag reveal">Service area</span>
+        <h2 class="reveal">Based in {site.city}. Working across the county.</h2>
+        <p class="reveal" style="margin-top:1.25rem">We know the buildings here. Century-old brick downtown near Five Points. Plaster houses around Carroll University. Ranches and split-levels to the south and west. Offices and industrial space along Moreland, Grandview and Sunset.</p>
+        <p class="reveal">Different buildings fail in different ways, and they are repaired in different ways. Local experience is mostly knowing which is which before the wall is opened.</p>
+      </div>
+      <div class="reveal" style="--d:.1s">
+        <h3>Where we take work</h3>
+        <ul class="chips">{site.serviceAreas.map((a) => <li>{a}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-fog" id="questions">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <span class="tag reveal">Questions</span>
+          <h2 class="reveal">Short answers to what people ask first</h2>
+        </div>
+      </div>
+      <div class="reveal"><Faq items={faqs} /></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div>
+        <h2>Have a drywall job in {site.city}? Get a number for it.</h2>
+        <p>Free, written, and specific to your project.</p>
+      </div>
+      <a class="btn btn-coal" href="/estimate/" data-estimate-open>Get a free estimate <Arrow /></a>
+    </div>
+  </section>
+</Base>
