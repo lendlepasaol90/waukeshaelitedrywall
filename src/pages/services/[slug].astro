@@ -7,6 +7,10 @@ import Faq from '../../components/Faq.astro';
 import { site } from '../../config/site';
 import { services, serviceBySlug, type Service } from '../../data/services';
 import { photo } from '../../lib/photos';
+import { moreA } from '../../data/more';
+import { moreB } from '../../data/more-b';
+import { moreC } from '../../data/more-c';
+import { moreD } from '../../data/more-d';
 
 export function getStaticPaths() {
   return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
@@ -24,9 +28,10 @@ const schema = [
   ] },
   { '@type': 'FAQPage', mainEntity: s.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
 ];
+const extra = [...(moreA[s.slug] ?? moreB[s.slug] ?? []), ...(moreC[s.slug] ?? []), ...(moreD[s.slug] ?? [])];
 const toc = [
   ['overview', 'Overview'], ['scope', s.what.h], ['when', s.situations.h], ['process', s.process.h],
-  ['materials', s.materials.h], ['results', s.benefits.h], ['before-after', 'Before and after'], ['local', s.local.h], ['faq', 'Questions'],
+  ['materials', s.materials.h], ['results', s.benefits.h], ...extra.map((e) => [e.id, e.h]), ['before-after', 'Before and after'], ['local', s.local.h], ['faq', 'Questions'],
 ];
 ---
 <Base title={s.title} description={s.description} ogPhoto={s.photo} schema={schema}>
@@ -72,6 +77,14 @@ const toc = [
           <h2>{s.benefits.h}</h2>
           <ul class="gains">{s.benefits.items.map((b) => <li><h3>{b.t}</h3><p>{b.d}</p></li>)}</ul>
         </section>
+        {extra.map((e) => (
+          <section id={e.id}>
+            <h2>{e.h}</h2>
+            {e.p?.map((p) => <p>{p}</p>)}
+            {e.rows && <ul class="rows">{e.rows.map(([t, d]) => <li><h3>{t}</h3><p>{d}</p></li>)}</ul>}
+            {e.after?.map((p) => <p>{p}</p>)}
+          </section>
+        ))}
         <section id="before-after">
           <h2>Before and after</h2>
           <BeforeAfter id={`ba-${s.slug}`} before={s.ba.before} after={s.ba.after} beforeAlt={s.ba.beforeAlt} afterAlt={s.ba.afterAlt} />

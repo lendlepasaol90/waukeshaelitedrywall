@@ -8,6 +8,9 @@ import EstimateForm from '../components/EstimateForm.astro';
 import { site } from '../config/site';
 import { services } from '../data/services';
 import { photo } from '../lib/photos';
+import { homeGuide } from '../data/more-b';
+import { homeGuideMore } from '../data/more-c';
+import { homeGuideLast } from '../data/more-d';
 
 const title = 'Waukesha Elite Drywall | Drywall Contractor in Waukesha, WI';
 const description = 'Drywall contractor in Waukesha, WI. Installation, taping, finishing and repair for homes, offices and commercial space. Clear written estimates, free.';
@@ -180,7 +183,27 @@ const schema = [{ '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: faq
     </div>
   </section>
 
-  <section class="band band-fog" id="questions">
+  <section class="band band-fog" id="guide">
+    <div class="wrap">
+      <div class="head-row">
+        <div>
+          <span class="tag reveal">Before you hire</span>
+          <h2 class="reveal">A plain guide to drywall work in {site.city}</h2>
+        </div>
+        <p class="reveal">What the work includes, what changes the price, and what to have ready. Fifteen short sections. Read the ones that apply.</p>
+      </div>
+      <ol class="guide">
+        {[...homeGuide, ...homeGuideMore, ...homeGuideLast].map((g) => (
+          <li>
+            <h3>{g.h}</h3>
+            <div>{g.p.map((p) => <p>{p}</p>)}</div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="questions">
     <div class="wrap">
       <div class="head-row">
         <div>
