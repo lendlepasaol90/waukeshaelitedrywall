@@ -3,6 +3,9 @@
   // "npm run build" writes it to ./dist and "npx wrangler deploy" uploads that folder.
   "name": "waukeshaelitedrywall",
   "compatibility_date": "2026-11-01",
+  // Build the site as part of every deploy, so it works even when the
+  // Cloudflare project has no separate build command set.
+  "build": { "command": "npm run build" },
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
