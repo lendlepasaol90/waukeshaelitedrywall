@@ -10,8 +10,10 @@
 export const site = {
   // --- Brand ---------------------------------------------------------------
   name: 'Waukesha Elite Drywall',
-  wordmark: { primary: 'Waukesha Elite', secondary: 'Drywall' }, // text logo used until `logo` is set
-  logo: null as string | null, // PLACEHOLDER: e.g. '/logo.svg' (file placed in /public)
+  wordmark: { primary: 'Waukesha Elite', secondary: 'Drywall' }, // text fallback, shown only if `logo` is set to null
+  logo: '/logo.png' as string | null, // full logo for light backgrounds (file in /public); also used in structured data
+  logoLight: '/logo-light.png' as string, // same logo with light lettering, for dark backgrounds
+  logoSize: { width: 900, height: 475 },
   url: 'https://waukeshaelitedrywall.com',
 
   // --- Location ------------------------------------------------------------

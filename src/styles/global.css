@@ -396,3 +396,7 @@ button { font: inherit; color: inherit; }
 .guide p:last-child { margin-bottom: 0; }
 @media (min-width: 56rem) { .guide > li { grid-template-columns: 20rem 1fr; } }
 .doc-main .rows + p { margin-top: 1.5rem; }
+
+/* Logo images */
+.brand img.logo-head { height: 3.4rem; width: auto; display: block; }
+.brand img.logo-foot { height: 5.5rem; width: auto; display: block; }
