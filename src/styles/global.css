@@ -126,7 +126,7 @@ button { font: inherit; color: inherit; }
 .mobile-menu details li { border: 0; }
 .mobile-menu details a { display: block; padding: 0.45rem 0 0.45rem 0.9rem; text-decoration: none; font-size: 0.97rem; border-left: 2px solid var(--fog); }
 .mobile-menu .btn { width: 100%; margin-top: 1.5rem; }
-@media (max-width: 64rem) { .nav-list, .nav .header-cta { display: none; } .menu-btn { display: block; position: relative; z-index: 101; } .topstrip .left { display: none; } .topstrip .wrap { justify-content: flex-end; } }
+@media (max-width: 68rem) { .nav-list, .nav .header-cta { display: none; } .menu-btn { display: block; position: relative; z-index: 101; } .topstrip .left { display: none; } .topstrip .wrap { justify-content: flex-end; } }
 @media (min-width: 64.01rem) { .mobile-menu { display: none; } }
 
 /* ---------- Hero: charcoal panel + photo, form bar overlapping ---------- */
@@ -400,3 +400,11 @@ button { font: inherit; color: inherit; }
 /* Logo images */
 .brand img.logo-head { height: 3.4rem; width: auto; display: block; }
 .brand img.logo-foot { height: 5.5rem; width: auto; display: block; }
+
+/* Footer map */
+.footer-map { margin-top: clamp(2rem, 4vw, 3rem); border: 1px solid rgba(255,255,255,0.16); border-radius: 0; overflow: hidden; }
+.footer-map iframe { display: block; width: 100%; height: clamp(15rem, 28vw, 21rem); border: 0; }
+
+/* Keep the desktop menu on one line now that it has a Home link */
+.nav-list > li > a, .nav-drop > button, .nav .header-cta { white-space: nowrap; }
+@media (max-width: 76rem) { .nav-list > li > a, .nav-drop > button { padding: 0 0.7rem; font-size: 0.93rem; } .nav-list > li > a::after, .nav-drop > button::after { left: 0.7rem; right: 0.7rem; } }

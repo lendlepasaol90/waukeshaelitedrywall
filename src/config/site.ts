@@ -20,6 +20,7 @@ export const site = {
   city: 'Waukesha',
   state: 'Wisconsin',
   stateAbbr: 'WI',
+  mapQuery: 'Waukesha, WI' as string, // what the footer Google Map shows; change to the full street address once confirmed ('' hides the map)
 
   // --- Contact (PLACEHOLDERS — leave empty until confirmed) ----------------
   phone: '' as string, // e.g. '(262) 555-0100' — displayed as written
