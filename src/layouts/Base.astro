@@ -43,6 +43,11 @@ if (site.email) business.email = site.email;
 if (site.address.street) {
   business.address = { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.region, postalCode: site.address.postalCode, addressCountry: 'US' };
 }
+if (site.about) business.description = site.about;
+if (site.owner) business.founder = { '@type': 'Person', name: site.owner };
+if (site.openingHours.length) {
+  business.openingHoursSpecification = site.openingHours.map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes }));
+}
 const sameAs = Object.values(site.social).filter(Boolean);
 if (sameAs.length) business.sameAs = sameAs;
 if (site.logo) business.logo = new URL(site.logo, site.url).href;
@@ -119,6 +124,7 @@ const year = new Date().getFullYear();
             <li><a href="/#how-we-work">How we work</a></li>
             <li><a href="/#questions">Questions</a></li>
           </ul>
+          {site.phone && <a class="header-phone" href={telHref}>{site.phone}</a>}
           <a class="btn btn-copper header-cta" href={inlineForm ? '#estimate-form' : heroForm ? '#hero-estimate' : '/estimate/'} data-estimate-open={inlineForm || heroForm ? undefined : ''}>Get a free estimate</a>
           <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-btn>
             <span class="visually-hidden">Menu</span><i></i><i></i><i></i>
@@ -143,6 +149,7 @@ const year = new Date().getFullYear();
         <li><a href="/#how-we-work">How we work</a></li>
         <li><a href="/#questions">Questions</a></li>
       </ul>
+      {site.phone && <a class="menu-phone" href={telHref}>Call {site.phone}</a>}
       <a class="btn btn-copper" href="/estimate/">Get a free estimate</a>
     </div>
 
@@ -192,7 +199,7 @@ const year = new Date().getFullYear();
         {site.mapQuery && (
           <div class="footer-map">
             <iframe
-              src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=12&output=embed`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=${site.address.street ? 15 : 12}&output=embed`}
               title={`Google Map of ${site.mapQuery}`}
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"

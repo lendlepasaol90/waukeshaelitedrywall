@@ -408,3 +408,17 @@ button { font: inherit; color: inherit; }
 /* Keep the desktop menu on one line now that it has a Home link */
 .nav-list > li > a, .nav-drop > button, .nav .header-cta { white-space: nowrap; }
 @media (max-width: 76rem) { .nav-list > li > a, .nav-drop > button { padding: 0 0.7rem; font-size: 0.93rem; } .nav-list > li > a::after, .nav-drop > button::after { left: 0.7rem; right: 0.7rem; } }
+
+/* Header phone + homepage About block */
+.header-phone { display: flex; align-items: center; font-family: var(--head); font-weight: 700; font-size: 1rem; text-decoration: none; white-space: nowrap; padding: 0 1rem; color: inherit; }
+.header-phone:hover { color: var(--copper-deep); }
+@media (max-width: 84rem) { .header-phone { display: none; } }
+.biz-facts { margin: 0; background: #fff; border-top: 3px solid var(--coal); }
+.biz-facts > div { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding: 0.95rem 1.1rem; border-bottom: 1px solid var(--rule); }
+.biz-facts dt { font-family: var(--head); font-weight: 700; }
+.biz-facts > div:last-child { border-bottom: 0; }
+.biz-facts dd { margin: 0; overflow-wrap: anywhere; }
+.biz-facts a { color: inherit; }
+.about { display: grid; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+@media (min-width: 60rem) { .about { grid-template-columns: 1.15fr 1fr; } }
+.mobile-menu .menu-phone { display: block; font-weight: 700; margin: 1rem 0 0.75rem; }

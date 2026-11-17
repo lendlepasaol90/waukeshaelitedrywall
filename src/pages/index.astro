@@ -5,7 +5,7 @@ import Arrow from '../components/Arrow.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import Faq from '../components/Faq.astro';
 import EstimateForm from '../components/EstimateForm.astro';
-import { site } from '../config/site';
+import { site, telHref } from '../config/site';
 import { services } from '../data/services';
 import { photo } from '../lib/photos';
 import { homeGuide } from '../data/more-b';
@@ -165,6 +165,23 @@ const schema = [{ '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: faq
       <div class="reveal">
         <BeforeAfter id="ba-home" before="new-room-drywall-taped-window" after="empty-room-smooth-plaster-walls" beforeAlt="new drywall with taped seams and coated screw heads" afterAlt="finished room with smooth, even walls" />
       </div>
+    </div>
+  </section>
+
+  <section class="band band-fog" id="about">
+    <div class="wrap about">
+      <div>
+        <span class="tag reveal">About us</span>
+        <h2 class="reveal">{site.name}</h2>
+        <p class="reveal" style="margin-top:1.25rem">{site.about}</p>
+      </div>
+      <dl class="biz-facts reveal">
+        <div><dt>Owner</dt><dd>{site.owner}</dd></div>
+        <div><dt>Phone</dt><dd><a href={telHref}>{site.phone}</a></dd></div>
+        <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+        <div><dt>Address</dt><dd>{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.postalCode}</dd></div>
+        <div><dt>Hours</dt><dd>Monday to Saturday, 7am to 6pm<br />Sunday closed</dd></div>
+      </dl>
     </div>
   </section>
 

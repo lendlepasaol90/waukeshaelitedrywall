@@ -96,8 +96,10 @@ function initForm(form: HTMLFormElement) {
 
     const endpoint = form.dataset.endpoint;
     if (!endpoint) {
+      const { phone, email } = form.dataset;
+      const contact = [phone && `call ${phone}`, email && `email ${email}`].filter(Boolean).join(' or ');
       showStatus(form, 'error', 'Online requests are not connected yet.',
-        'Your details were checked but not sent. The form has not been linked to an inbox. Site owner: set form.endpoint in src/config/site.ts.');
+        `Your details were checked but not sent. ${contact ? `Please ${contact} and we will take your request directly.` : 'The form has not been linked to an inbox.'}`);
       return;
     }
 

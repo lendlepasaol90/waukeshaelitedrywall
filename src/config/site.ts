@@ -20,21 +20,29 @@ export const site = {
   city: 'Waukesha',
   state: 'Wisconsin',
   stateAbbr: 'WI',
-  mapQuery: 'Waukesha, WI' as string, // what the footer Google Map shows; change to the full street address once confirmed ('' hides the map)
+  mapQuery: 'Waukesha Elite Drywall, 1643 Arcadian Ave #526, Waukesha, WI 53186' as string, // what the footer Google Map shows ('' hides the map)
 
-  // --- Contact (PLACEHOLDERS — leave empty until confirmed) ----------------
-  phone: '' as string, // e.g. '(262) 555-0100' — displayed as written
-  email: '' as string, // e.g. 'estimates@waukeshaelitedrywall.com'
+  // --- Contact ------------------------------------------------------------
+  phone: '(262) 599-6156' as string, // displayed as written
+  email: 'office@waukeshaelitedrywall.com' as string,
   address: {
-    street: '' as string,
-    city: '' as string,
-    region: '' as string,
-    postalCode: '' as string,
+    street: '1643 Arcadian Ave #526' as string,
+    city: 'Waukesha' as string,
+    region: 'WI' as string,
+    postalCode: '53186' as string,
   },
-  hours: '' as string, // e.g. 'Mon–Fri 7am–5pm'
+  hours: 'Mon–Sat 7am–6pm · Sunday closed' as string, // shown in the footer
+  // Opening hours for structured data (24-hour times). Days not listed are closed.
+  openingHours: [
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '07:00', closes: '18:00' },
+  ],
+  owner: 'John Howser' as string,
+  category: 'Drywall Contractor',
+  about:
+    'Waukesha Elite Drywall brings precision and craftsmanship to drywall projects throughout Waukesha, WI, and surrounding communities. From installing drywall in new homes and finished basements to repairing damaged walls and ceilings, we help property owners achieve smooth, professional results. Our drywall services include sheetrock installation, drywall patching, taping, mudding, sanding, and finishing for residential and commercial spaces. Whether you’re updating a single room, renovating an entire property, or completing new construction, Waukesha Elite Drywall delivers dependable service and careful attention to detail. Proudly serving Waukesha, Pewaukee, Brookfield, New Berlin, Delafield, and nearby Wisconsin communities.',
 
-  // --- Service areas (PLACEHOLDER — confirm the list you actually serve) ---
-  serviceAreas: ['Waukesha', 'Pewaukee', 'Brookfield', 'New Berlin', 'Delafield', 'Wales', 'Genesee', 'Big Bend'],
+  // --- Service areas -------------------------------------------------------
+  serviceAreas: ['Waukesha', 'Pewaukee', 'Brookfield', 'New Berlin', 'Delafield'],
 
   // --- Social profiles (PLACEHOLDERS) --------------------------------------
   social: {
