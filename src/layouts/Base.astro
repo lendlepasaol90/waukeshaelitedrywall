@@ -115,12 +115,12 @@ const year = new Date().getFullYear();
             <li class="nav-drop" data-drop>
               <button type="button" aria-expanded="false" aria-controls="services-panel">Services <svg viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1.5l5 5 5-5"/></svg></button>
               <div class="drop-panel" id="services-panel">
-                {services.map((s) => <a href={`/services/${s.slug}/`}>{s.name}</a>)}
+                {services.map((s) => <a href={`/${s.slug}/`}>{s.name}</a>)}
                 <a href="/services/">View all services</a>
               </div>
             </li>
-            <li><a href="/services/commercial-drywall-services/" aria-current={path.includes('commercial') ? 'page' : undefined}>Commercial</a></li>
-            <li><a href="/services/residential-drywall-services/" aria-current={path.includes('residential') ? 'page' : undefined}>Residential</a></li>
+            <li><a href="/commercial-drywall-services/" aria-current={path.includes('commercial') ? 'page' : undefined}>Commercial</a></li>
+            <li><a href="/residential-drywall-services/" aria-current={path.includes('residential') ? 'page' : undefined}>Residential</a></li>
             <li><a href="/#how-we-work">How we work</a></li>
             <li><a href="/#questions">Questions</a></li>
           </ul>
@@ -139,13 +139,13 @@ const year = new Date().getFullYear();
           <details>
             <summary>Services</summary>
             <ul>
-              {services.map((s) => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}
+              {services.map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
               <li><a href="/services/">View all services</a></li>
             </ul>
           </details>
         </li>
-        <li><a href="/services/commercial-drywall-services/">Commercial</a></li>
-        <li><a href="/services/residential-drywall-services/">Residential</a></li>
+        <li><a href="/commercial-drywall-services/">Commercial</a></li>
+        <li><a href="/residential-drywall-services/">Residential</a></li>
         <li><a href="/#how-we-work">How we work</a></li>
         <li><a href="/#questions">Questions</a></li>
       </ul>
@@ -173,13 +173,13 @@ const year = new Date().getFullYear();
           <div>
             <h2>Install and finish</h2>
             <ul>
-              {services.filter((s) => /installation|taping|finishing|commercial|residential/.test(s.slug)).map((s) => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}
+              {services.filter((s) => /installation|taping|finishing|commercial|residential/.test(s.slug)).map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
             </ul>
           </div>
           <div>
             <h2>Repair and removal</h2>
             <ul>
-              {services.filter((s) => !/installation|taping|finishing|commercial|residential/.test(s.slug)).map((s) => <li><a href={`/services/${s.slug}/`}>{s.name}</a></li>)}
+              {services.filter((s) => !/installation|taping|finishing|commercial|residential/.test(s.slug)).map((s) => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}
             </ul>
           </div>
           <div>

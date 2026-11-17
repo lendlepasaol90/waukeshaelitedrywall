@@ -11,7 +11,7 @@ const schema = [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
     { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.url}/services/` },
   ] },
-  { '@type': 'ItemList', itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.name, url: `${site.url}/services/${s.slug}/` })) },
+  { '@type': 'ItemList', itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.name, url: `${site.url}/${s.slug}/` })) },
 ];
 ---
 <Base title={title} description={description} schema={schema}>
@@ -26,7 +26,7 @@ const schema = [
     <div class="wrap">
       <div class="matrix">
         {services.map((s, i) => (
-          <a href={`/services/${s.slug}/`} class="reveal" style={`--d:${(i % 4) * 0.06}s`}>
+          <a href={`/${s.slug}/`} class="reveal" style={`--d:${(i % 4) * 0.06}s`}>
             <h2 style="font-size:1.22rem;margin-bottom:.6rem;letter-spacing:-.01em">{s.name}</h2>
             <p>{s.short}</p>
             <span class="go">Details <Arrow /></span>

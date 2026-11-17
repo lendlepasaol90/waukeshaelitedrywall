@@ -1,22 +1,22 @@
 ---
 import { Picture } from 'astro:assets';
-import Base from '../../layouts/Base.astro';
-import Arrow from '../../components/Arrow.astro';
-import BeforeAfter from '../../components/BeforeAfter.astro';
-import Faq from '../../components/Faq.astro';
-import { site } from '../../config/site';
-import { services, serviceBySlug, type Service } from '../../data/services';
-import { photo } from '../../lib/photos';
-import { moreA } from '../../data/more';
-import { moreB } from '../../data/more-b';
-import { moreC } from '../../data/more-c';
-import { moreD } from '../../data/more-d';
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import Faq from '../components/Faq.astro';
+import { site } from '../config/site';
+import { services, serviceBySlug, type Service } from '../data/services';
+import { photo } from '../lib/photos';
+import { moreA } from '../data/more';
+import { moreB } from '../data/more-b';
+import { moreC } from '../data/more-c';
+import { moreD } from '../data/more-d';
 
 export function getStaticPaths() {
   return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
 }
 const { s } = Astro.props as { s: Service };
-const url = `${site.url}/services/${s.slug}/`;
+const url = `${site.url}/${s.slug}/`;
 const related = s.related.map((slug) => serviceBySlug[slug]);
 const plain = s.name.toLowerCase().replace('&', 'and');
 const schema = [
@@ -107,7 +107,7 @@ const toc = [
       <div class="head-row"><div><span class="tag">Related services</span><h2>Work that often goes with this</h2></div></div>
       <div class="rel">
         {related.map((r) => (
-          <a href={`/services/${r.slug}/`}>
+          <a href={`/${r.slug}/`}>
             <h3>{r.name}</h3>
             <p>{r.short}</p>
             <span class="more">Details <Arrow /></span>

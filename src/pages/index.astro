@@ -75,7 +75,7 @@ const schema = [{ '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: faq
       </div>
       <div class="matrix">
         {services.map((s, i) => (
-          <a href={`/services/${s.slug}/`} class="reveal" style={`--d:${(i % 4) * 0.06}s`}>
+          <a href={`/${s.slug}/`} class="reveal" style={`--d:${(i % 4) * 0.06}s`}>
             <h3>{s.name}</h3>
             <p>{s.short}</p>
             <span class="go">Details <Arrow /></span>
@@ -119,7 +119,7 @@ const schema = [{ '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: faq
           <h3>Contractors, owners and property managers</h3>
           <p>You need a drywall sub who reads the drawings, shows up on the day and does not leave a punch list a page long. We frame, board and finish to the partition schedule, and we tell you early if something on the plans will not work.</p>
           <ul><li>Tenant build-outs</li><li>Steel stud framing</li><li>Rated partitions</li><li>Off-hours work</li></ul>
-          <a class="more" href="/services/commercial-drywall-services/">Commercial drywall services <Arrow /></a>
+          <a class="more" href="/commercial-drywall-services/">Commercial drywall services <Arrow /></a>
         </div>
       </article>
       <article class="sector flip reveal">
@@ -128,7 +128,7 @@ const schema = [{ '@type': 'FAQPage', '@id': `${site.url}/#faq`, mainEntity: faq
           <h3>Homeowners and remodelers</h3>
           <p>You need walls that look right and a house that is not coated in dust. We protect what stays, keep to the days we gave you, and leave the room ready for the painter.</p>
           <ul><li>Remodels and additions</li><li>Basements and garages</li><li>Popcorn ceiling removal</li><li>Cracks, holes and leaks</li></ul>
-          <a class="more" href="/services/residential-drywall-services/">Residential drywall services <Arrow /></a>
+          <a class="more" href="/residential-drywall-services/">Residential drywall services <Arrow /></a>
         </div>
       </article>
     </div>
